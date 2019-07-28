@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qfjy.project.meeting.mapper.MeetingGrabMapper" >
+  <resultMap id="BaseResultMap" type="com.qfjy.project.meeting.bean.MeetingGrab" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="grabstatus" property="grabstatus" jdbcType="SMALLINT" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="grabdate" property="grabdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, remark, pid, uid, grabstatus, createdate, grabdate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from meetinggrab
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from meetinggrab
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.qfjy.project.meeting.bean.MeetingGrab" >
+    insert into meetinggrab (id, remark, pid, 
+      uid, grabstatus, createdate, 
+      grabdate)
+    values (#{id,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, 
+      #{uid,jdbcType=INTEGER}, #{grabstatus,jdbcType=SMALLINT}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{grabdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qfjy.project.meeting.bean.MeetingGrab" >
+    insert into meetinggrab
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="grabstatus != null" >
+        grabstatus,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="grabdate != null" >
+        grabdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="grabstatus != null" >
+        #{grabstatus,jdbcType=SMALLINT},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="grabdate != null" >
+        #{grabdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qfjy.project.meeting.bean.MeetingGrab" >
+    update meetinggrab
+    <set >
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="grabstatus != null" >
+        grabstatus = #{grabstatus,jdbcType=SMALLINT},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="grabdate != null" >
+        grabdate = #{grabdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qfjy.project.meeting.bean.MeetingGrab" >
+    update meetinggrab
+    set remark = #{remark,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=INTEGER},
+      grabstatus = #{grabstatus,jdbcType=SMALLINT},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
+      grabdate = #{grabdate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+ 
+  <!-- 一对一 根据pid查询用户 -->
+  <select id="selectUserByPid" resultMap="selectUserByPidResultMap">
+  SELECT
+		grab.*,
+		u.name,
+		u.province
+	FROM
+		meetinggrab grab
+	LEFT JOIN `user` u ON grab.uid = u.id
+	WHERE
+		grab.pid =#{pid}
+  </select>
+  <resultMap type="MeetingGrab" id="selectUserByPidResultMap" extends="BaseResultMap">
+  	  <association property="user" javaType="User">
+  	 
+    <result column="name" property="name" jdbcType="VARCHAR" />
+   
+   
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    
+  	</association>
+  </resultMap>
+  
+  
+</mapper>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qfjy.project.meeting.mapper.AdminUserMapper" >
+  <resultMap id="BaseResultMap" type="com.qfjy.project.meeting.bean.AdminUser" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="uname" property="uname" jdbcType="VARCHAR" />
+    <result column="upass" property="upass" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="lastip" property="lastip" jdbcType="VARCHAR" />
+    <result column="lastdate" property="lastdate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, uname, upass, count, lastip, lastdate, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from adminuser
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from adminuser
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qfjy.project.meeting.bean.AdminUser" >
+    insert into adminuser ( uname, upass, 
+      count, lastip, lastdate, 
+      status)
+    values ( #{uname,jdbcType=VARCHAR}, #{upass,jdbcType=VARCHAR}, 
+      #{count,jdbcType=INTEGER}, #{lastip,jdbcType=VARCHAR}, #{lastdate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qfjy.project.meeting.bean.AdminUser" >
+    insert into adminuser
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+     
+      <if test="uname != null" >
+        uname,
+      </if>
+      <if test="upass != null" >
+        upass,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="lastip != null" >
+        lastip,
+      </if>
+      <if test="lastdate != null" >
+        lastdate,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="upass != null" >
+        #{upass,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="lastip != null" >
+        #{lastip,jdbcType=VARCHAR},
+      </if>
+      <if test="lastdate != null" >
+        #{lastdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qfjy.project.meeting.bean.AdminUser" >
+    update adminuser
+    <set >
+      <if test="uname != null" >
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="upass != null" >
+        upass = #{upass,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="lastip != null" >
+        lastip = #{lastip,jdbcType=VARCHAR},
+      </if>
+      <if test="lastdate != null" >
+        lastdate = #{lastdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qfjy.project.meeting.bean.AdminUser" >
+    update adminuser
+    set uname = #{uname,jdbcType=VARCHAR},
+      upass = #{upass,jdbcType=VARCHAR},
+      count = #{count,jdbcType=INTEGER},
+      lastip = #{lastip,jdbcType=VARCHAR},
+      lastdate = #{lastdate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

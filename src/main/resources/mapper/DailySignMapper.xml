@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qfjy.project.meeting.mapper.DailySignMapper" >
+  <resultMap id="BaseResultMap" type="com.qfjy.project.meeting.bean.DailySign" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="point" property="point" jdbcType="INTEGER" />
+    <result column="signtime" property="signtime" jdbcType="TIMESTAMP" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, point, signtime, uid, status, num, count,signstr
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dailysign
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dailysign
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qfjy.project.meeting.bean.DailySign" >
+    insert into dailysign ( point, signtime, 
+      uid, status, num, count,signstr
+      )
+    values (#{point,jdbcType=INTEGER}, #{signtime,jdbcType=TIMESTAMP}, 
+      #{uid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, #{signstr,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qfjy.project.meeting.bean.DailySign" >
+    insert into dailysign
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      
+      <if test="point != null" >
+        point,
+      </if>
+      <if test="signtime != null" >
+        signtime,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="signstr != null" >
+        signstr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      
+      <if test="point != null" >
+        #{point,jdbcType=INTEGER},
+      </if>
+      <if test="signtime != null" >
+        #{signtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+       <if test="signstr != null" >
+        #{signstr},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qfjy.project.meeting.bean.DailySign" >
+    update dailysign
+    <set >
+      <if test="point != null" >
+        point = #{point,jdbcType=INTEGER},
+      </if>
+      <if test="signtime != null" >
+        signtime = #{signtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="signstr != null" >
+        signstr = #{signstr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qfjy.project.meeting.bean.DailySign" >
+    update dailysign
+    set point = #{point,jdbcType=INTEGER},
+      signtime = #{signtime,jdbcType=TIMESTAMP},
+      uid = #{uid,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      num = #{num,jdbcType=INTEGER},
+      count = #{count,jdbcType=INTEGER},
+      signstr = #{signstr,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qfjy.project.meeting.mapper.MeetingPubMapper" >
+  <resultMap id="BaseResultMap" type="com.qfjy.project.meeting.bean.MeetingPub" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="pcode" property="pcode" jdbcType="VARCHAR" />
+    <result column="ptime" property="ptime" jdbcType="VARCHAR" />
+    <result column="tname" property="tname" jdbcType="VARCHAR" />
+    <result column="ptitle" property="ptitle" jdbcType="VARCHAR" />
+    <result column="zone" property="zone" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pcode, ptime, tname, ptitle, zone, remark, createdate, status, uid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from meetingpub
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from meetingpub
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.qfjy.project.meeting.bean.MeetingPub" >
+    insert into meetingpub (id, pcode, ptime, 
+      tname, ptitle, zone, 
+      remark, createdate, status, 
+      uid)
+    values (#{id,jdbcType=VARCHAR}, #{pcode,jdbcType=VARCHAR}, #{ptime,jdbcType=VARCHAR}, 
+      #{tname,jdbcType=VARCHAR}, #{ptitle,jdbcType=VARCHAR}, #{zone,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{status,jdbcType=SMALLINT}, 
+      #{uid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qfjy.project.meeting.bean.MeetingPub" >
+    insert into meetingpub
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pcode != null" >
+        pcode,
+      </if>
+      <if test="ptime != null" >
+        ptime,
+      </if>
+      <if test="tname != null" >
+        tname,
+      </if>
+      <if test="ptitle != null" >
+        ptitle,
+      </if>
+      <if test="zone != null" >
+        zone,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="pcode != null" >
+        #{pcode,jdbcType=VARCHAR},
+      </if>
+      <if test="ptime != null" >
+        #{ptime,jdbcType=VARCHAR},
+      </if>
+      <if test="tname != null" >
+        #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="ptitle != null" >
+        #{ptitle,jdbcType=VARCHAR},
+      </if>
+      <if test="zone != null" >
+        #{zone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qfjy.project.meeting.bean.MeetingPub" >
+    update meetingpub
+    <set >
+      <if test="pcode != null" >
+        pcode = #{pcode,jdbcType=VARCHAR},
+      </if>
+      <if test="ptime != null" >
+        ptime = #{ptime,jdbcType=VARCHAR},
+      </if>
+      <if test="tname != null" >
+        tname = #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="ptitle != null" >
+        ptitle = #{ptitle,jdbcType=VARCHAR},
+      </if>
+      <if test="zone != null" >
+        zone = #{zone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qfjy.project.meeting.bean.MeetingPub" >
+    update meetingpub
+    set pcode = #{pcode,jdbcType=VARCHAR},
+      ptime = #{ptime,jdbcType=VARCHAR},
+      tname = #{tname,jdbcType=VARCHAR},
+      ptitle = #{ptitle,jdbcType=VARCHAR},
+      zone = #{zone,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=SMALLINT},
+      uid = #{uid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 多对一  用户 -->
+  <select id="selectUserByPrimaryKey" resultMap="selectUserByPrimaryKeyResultMap">
+	SELECT
+	m.*, u.id AS id1,
+	u. NAME,
+	u.email,
+	u.telephone,
+	u.province,
+	u.city,
+	u.zone AS zone1,
+	u.rid,
+	u. STATUS AS status1,
+	u.createdate,
+	u.wid
+	FROM
+	meetingpub m
+	LEFT JOIN USER u ON m.uid = u.id
+	WHERE
+	m.id = '1007d0b7-8437-44f2-b418-b2f9613ef26f'
+  	
+  
+  
+  </select>
+  <resultMap type="MeetingPub" id="selectUserByPrimaryKeyResultMap" extends="BaseResultMap">
+  	
+  	
+  	<association property="user" javaType="User">
+  		 <id column="id1" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="zone1" property="zone" jdbcType="VARCHAR" />
+    <result column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="status1" property="status" jdbcType="SMALLINT" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="wid" property="wid" jdbcType="INTEGER" />
+  		
+  	</association>
+  </resultMap>
+  <!--会议抢单功能 可抢单列表 根据抢单人id  -->
+  <select id="selectByMeetingGrabUid" resultType="MeetingPub">
+  
+		  SELECT
+			*
+		FROM
+			meetingpub pub
+		LEFT JOIN `user` u ON (
+			pub.zone = u.zone
+			OR pub.zone = '全国'
+		)
+		WHERE
+			u.id = #{arg0}
+		AND pub.id NOT IN (
+			SELECT
+				pid
+			FROM
+				meetinggrab
+			WHERE
+				uid = #{arg0}
+			OR grabstatus = 1
+		)
+		AND pub.`status` = 1
+		<if test="arg1!='-1'.toString">
+		AND tname = #{arg1}
+		</if>
+		ORDER BY
+			pub.pcode DESC
+		  
+		  
+  </select>
+  
+  <!-- 一对一 -->
+  <select id="selectMeetingGrabByUid" resultMap="selectMeetingGrabByUidResultMap">
+  	SELECT
+	pub.*,grab.id as id1,grab.remark as remark1,grab.pid,grab.uid as uid1,grab.grabstatus,
+	grab.createdate as createdate1,grab.grabdate
+	FROM
+	meetingpub pub
+	LEFT JOIN meetinggrab grab ON pub.id = grab.pid
+	WHERE
+	grab.uid = #{uid}
+	AND pub.`status` = 1
+	ORDER BY
+	ptime DESC
+  </select>
+  <resultMap type="MeetingPub" id="selectMeetingGrabByUidResultMap" extends="BaseResultMap">
+  
+  <association property="meetingGrab" javaType="MeetingGrab">
+  
+  <id column="id1" property="id" jdbcType="VARCHAR" />
+    <result column="remark1" property="remark" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="uid1" property="uid" jdbcType="INTEGER" />
+    <result column="grabstatus" property="grabstatus" jdbcType="SMALLINT" />
+    <result column="createdate1" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="grabdate" property="grabdate" jdbcType="TIMESTAMP" />
+  </association>
+  
+  </resultMap>
+  <!-- 后台管理页面 多对一  -->
+  <select id="selectByMeetingPub" resultMap="selectByMeetingPubResultMap">
+  SELECT
+	p.*, u.id AS id1,
+	u.name,
+	u.email,
+	u.telephone,
+	u.province,
+	u.city,
+	u.zone AS zone1,
+	u.rid,
+	u. STATUS AS status1,
+	u.createdate,
+	u.wid,
+	g.id as id2,
+	g.uid as uid1,
+	g.remark as remark1,
+	g.createdate as createdate2,
+	g.grabstatus
+	FROM
+		meetingpub p
+	LEFT JOIN `user` u ON p.uid = u.id   
+	LEFT JOIN meetinggrab g on g.pid = p.id
+	<where>
+	<if test="g.grabstatus!=-1 and g.grabstatus!=null">
+  			and g.grabstatus=#{g.grabstatus}
+  	</if>
+	<if test="u.name!=null and u.name!=''">
+	AND	u.name = #{u.name}
+	</if>
+	<if test="p.pcode!=null and p.pcode!=''">
+	AND p.pcode = #{p.pcode}
+	</if>
+	<if test="p.tname!=null and p.tname!=''">
+	AND p.tname = #{p.tname}
+	</if>
+	</where>
+  </select>
+  <resultMap type="MeetingPub" id="selectByMeetingPubResultMap" extends="BaseResultMap">
+  
+  <association property="user" javaType="User">
+  		 <id column="id1" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="zone1" property="zone" jdbcType="VARCHAR" />
+    <result column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="status1" property="status" jdbcType="SMALLINT" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="wid" property="wid" jdbcType="INTEGER" />
+  		
+  	</association>
+  
+  <association property="meetingGrab" javaType="MeetingGrab">
+  
+  <id column="id2" property="id" jdbcType="VARCHAR" />
+    <result column="remark1" property="remark" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="uid1" property="uid" jdbcType="INTEGER" />
+    <result column="grabstatus" property="grabstatus" jdbcType="SMALLINT" />
+    <result column="createdate2" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="grabdate" property="grabdate" jdbcType="TIMESTAMP" />
+  </association>
+  </resultMap>
+   <!-- 批量删除 -->
+  <delete id="deleteBatchByIds">
+  		delete from meetingpub where id in 
+  		<foreach collection="array" item="ids" open="(" separator="," close=")">
+  			#{ids}
+  		</foreach>
+  
+  </delete>
+  
+</mapper>
